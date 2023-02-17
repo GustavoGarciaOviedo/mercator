@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:mercator/widgets/widgets.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
@@ -6,8 +7,14 @@ class HomeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Center(
-        child: Text('home screen'),
+      appBar: AppBar(
+        title: Text('productos'),
+      ),
+      body: ListView.builder(
+        itemCount: 10,
+        itemBuilder: (BuildContext context, int index) {
+          return ProductCard();
+        },
       ),
     );
   }

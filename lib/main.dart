@@ -12,13 +12,14 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       title: 'Material App',
       
-      initialRoute: 'login' ,
+      initialRoute: 'home' ,
       routes: {
         'home': (_)=> HomeScreen(),
         'login':(_) => LoginScreen(),
       },//recordad que necesita el contex
       theme: ThemeData.light().copyWith(//MODIFICO A NIVEL GLOBAL TODOS LOS SCAFFOLD
-        scaffoldBackgroundColor: Colors.grey[200]
+        scaffoldBackgroundColor: Colors.grey[200],
+        appBarTheme: AppBarTheme(color: Colors.pink[500])
       ),
     );
   }
