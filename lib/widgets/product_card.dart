@@ -1,8 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:mercator/models/product.dart';
 
 //el contenido que tiene la tarjeta del home
 class ProductCard extends StatelessWidget {
-  const ProductCard({super.key});
+
+  final Product product;
+
+  const ProductCard({super.key, required this.product});
+  
 
   @override
   Widget build(BuildContext context) {
@@ -15,21 +20,22 @@ class ProductCard extends StatelessWidget {
         decoration: _cardBorder(),
         child: Stack(
           children: [
-            _BackgroundImage(),
+            _BackgroundImage(product.picture),
+            //estos container para darle la ubicacion a cada uno de los widges estraidos 
             Container(
                 alignment: FractionalOffset.bottomLeft,
-                child: _ProductDetail()),
+                child: _ProductDetail(title: product.name, subtitle: product.id!,)),
             Container(
                 alignment: FractionalOffset.topRight, 
-                child: _PriceTag()),
+                child: _PriceTag(product.price)),
 
+            if(!product.available)//si no esta disponible mostrar, por que muestra es lo no disponible ;p
             Container(
                 alignment: FractionalOffset.topLeft, 
                 child:  _NotAvailable()),
-
-           
           ],
         ),
+        
         //color: Color.fromARGB(255, 238, 30, 15),
       ),
     );
@@ -37,7 +43,7 @@ class ProductCard extends StatelessWidget {
 
 //esta es la tareta que voy a utilizar como base
   BoxDecoration _cardBorder() => BoxDecoration(
-          color: Colors.amber[600],
+          color: Colors.red[600],//no estoy usando este color
           borderRadius: BorderRadius.circular(25),
           boxShadow: [
             BoxShadow(
@@ -75,9 +81,9 @@ class _NotAvailable extends StatelessWidget {
 
 //imagen de fondo,, la veria como la tarjeta superpuesta
 class _BackgroundImage extends StatelessWidget {
-  const _BackgroundImage({
-    Key? key,
-  }) : super(key: key);
+   final String? url;
+
+  const _BackgroundImage( this.url);
 
   @override
   Widget build(BuildContext context) {
@@ -87,10 +93,14 @@ class _BackgroundImage extends StatelessWidget {
       child: Container(
         width: double.infinity,
         height: 400,
-        color: Colors.green,
-        child: FadeInImage(
+        color: Colors.green,//solo esta de guia porque al poner la imagen se cubre
+        child: url == null
+        ?Image(
+          image: AssetImage('assets/no-image.png'))
+        :
+         FadeInImage(
           placeholder: AssetImage('assets/jar-loading.gif'),
-          image: NetworkImage('https://via.placeholder.com/400x300/f6f6f6'),
+          image: NetworkImage(url!),
           fit: BoxFit
               .cover, //para quye la imagen utilice todo el campo del widget
         ),
@@ -101,9 +111,9 @@ class _BackgroundImage extends StatelessWidget {
 
 //parte superior donde se encuentra el precio
 class _PriceTag extends StatelessWidget {
-  const _PriceTag({
-    super.key,
-  });
+  final double valor;
+
+  const _PriceTag( this.valor);
 
   @override
   Widget build(BuildContext context) {
@@ -117,7 +127,7 @@ class _PriceTag extends StatelessWidget {
         child: Padding(
             padding: EdgeInsets.symmetric(horizontal: 20),
             child: Text(
-          '35000 \$',
+          '$valor \$',
           style: TextStyle(
               fontSize: 20, color: Colors.white, fontWeight: FontWeight.bold),
         )),
@@ -128,6 +138,11 @@ class _PriceTag extends StatelessWidget {
 
 //detalles del producto
 class _ProductDetail extends StatelessWidget {
+
+  final String title;
+  final String subtitle;
+
+  const _ProductDetail({ required this.title, required this.subtitle});//con las llaves se envian por nombre
   @override
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
@@ -141,13 +156,13 @@ class _ProductDetail extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
-            'hard disk ',
+            title,
             style: TextStyle(fontSize: 30, color: Colors.white),
             maxLines: 1,
             overflow: TextOverflow.ellipsis,
           ),
           Text(
-            ' id',
+            subtitle,
             style: TextStyle(fontSize: 20, color: Colors.white),
             maxLines: 1,
             overflow: TextOverflow.ellipsis,
