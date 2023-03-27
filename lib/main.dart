@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:mercator/screens/settings/user_address.dart';
+import 'package:mercator/screens/settings/payment.dart';
 import 'package:provider/provider.dart';
 
 import 'package:mercator/screens/screens.dart';
@@ -36,6 +38,11 @@ class MyApp extends StatelessWidget {
         'login':(_) => LoginScreen(),
         'home': (_)=> HomeScreen(),
         'product':(_) => ProductScreen(),
+        SettingsScreen.routeName:(context) => SettingsScreen(),// lo manipulo de esta forma, ver .dar
+        'order': (_)=> Order(),
+        'payment':(_) => PaymentMethod(),
+        'address':(_) => UserAddress()
+
       },//recordad que necesita el contex
       theme: ThemeData.light().copyWith(//MODIFICO A NIVEL GLOBAL TODOS LOS SCAFFOLD, remember pasar a una clase con los diselnos
         scaffoldBackgroundColor: Colors.grey[200],

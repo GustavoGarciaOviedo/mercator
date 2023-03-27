@@ -32,6 +32,8 @@ dependencies:
   cupertino_icons: ^1.0.2
   flutter:
     sdk: flutter
+  
+  card_swiper: ^2.0.4
   http: ^0.13.5
   provider: ^6.0.5
 
@@ -51,7 +53,10 @@ flutter:
   uses-material-design: true
   # To add assets to your application, add an assets section, like this:
   assets:
-    - assets/
+    - assets/jar-loading.gif
+    - assets/no-image.png
+    - assets/menu-img.jpg
+
   #   - images/a_dot_ham.jpeg
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware

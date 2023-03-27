@@ -15,6 +15,9 @@ class ProductsService extends ChangeNotifier{
   final _baseUrl= 'flutter-productos-bfdd2-default-rtdb.firebaseio.com';
   final List<Product> products = [];//creo la lista de productos que recibe desde lso modelos (quictype.io)
 
+  //creo un anueva propiedad que me va a alojar un producto
+  late Product selectedProduct;
+
   bool isLoading=true;
 
   ProductsService(){

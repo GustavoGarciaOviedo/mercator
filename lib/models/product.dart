@@ -13,6 +13,7 @@ class Product {
         required this.name,
         this.picture,
         required this.price,
+        this.id
 
     });
 
@@ -39,4 +40,15 @@ class Product {
         "picture": picture,
         "price": price,
     };
+
+
+//hago una copia porque no quiero alterar mi producto cuando se pasen los valores a la otra pagina
+    Product copy () => Product(
+        available: this.available,
+        name: this.name,
+        picture: this.picture,
+        price: this.price,
+        id: this.id
+    
+    );
 }

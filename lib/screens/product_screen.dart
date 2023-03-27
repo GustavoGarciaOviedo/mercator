@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:mercator/services/products_service.dart';
 import 'package:mercator/widgets/widgets.dart';
 import 'package:mercator/ui/input_decoration.dart';
+import 'package:provider/provider.dart';
 
 
 class ProductScreen extends StatelessWidget {
@@ -8,6 +10,9 @@ class ProductScreen extends StatelessWidget {
 
  @override
   Widget build(BuildContext context) {
+
+    final productsService = Provider.of<ProductsService>(context);
+
     return Scaffold(
       body: SingleChildScrollView(
         child: Column(
@@ -20,7 +25,7 @@ class ProductScreen extends StatelessWidget {
                     topRight: Radius.circular(45)),
                 child: Stack(
                   children: [
-                    ProductImage(),//es una clase
+                    ProductImage(url: productsService.selectedProduct.picture),//es una clase
                     Positioned(//ubicacion sobre el widget que tiene con respecto a los valores que vaya a indicar
                       left: 20, top: 40,
                       child: IconButton(
@@ -114,3 +119,5 @@ class _productForm extends StatelessWidget {
     ],
   );
 }
+
+

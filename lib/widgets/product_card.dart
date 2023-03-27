@@ -12,31 +12,35 @@ class ProductCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: EdgeInsets.symmetric(horizontal: 20),
-      child: Container(
-        margin: EdgeInsets.only(top: 30, bottom: 50),
-        width: double.infinity,
-        height: 400,
-        decoration: _cardBorder(),
-        child: Stack(
-          children: [
-            _BackgroundImage(product.picture),
-            //estos container para darle la ubicacion a cada uno de los widges estraidos 
-            Container(
-                alignment: FractionalOffset.bottomLeft,
-                child: _ProductDetail(title: product.name, subtitle: product.id!,)),
-            Container(
-                alignment: FractionalOffset.topRight, 
-                child: _PriceTag(product.price)),
-
-            if(!product.available)//si no esta disponible mostrar, por que muestra es lo no disponible ;p
-            Container(
-                alignment: FractionalOffset.topLeft, 
-                child:  _NotAvailable()),
-          ],
+      padding: EdgeInsets.symmetric(horizontal: 50),
+      child: FittedBox(
+        fit: BoxFit.cover,
+        child: Container(
+          margin: EdgeInsets.only(top: 30, bottom: 50),
+          width: MediaQuery.of(context).size.width * 0.6 ,
+          height: 300,
+          decoration: _cardBorder(),
+          child: Stack(
+            children: [
+              _BackgroundImage(product.picture),
+              //estos container para darle la ubicacion a cada uno de los widges estraidos 
+              Positioned(bottom: 0,left: 0,
+                //alignment: FractionalOffset.bottomLeft,
+                child: _ProductDetail(title: product.name, subtitle: product.id!,)
+              ),
+              Positioned(top: 0,right: 0,
+                child: _PriceTag(product.price),
+              ),
+      
+              if (!product.available)
+              Positioned(top: 0,left: 0,
+                child: _NotAvailable(),
+              ),
+            ],
+          ),
+          
+          //color: Color.fromARGB(255, 238, 30, 15),
         ),
-        
-        //color: Color.fromARGB(255, 238, 30, 15),
       ),
     );
   }
@@ -64,7 +68,7 @@ class _NotAvailable extends StatelessWidget {
     return Container(
       decoration: _buildBoxDecoration(tl: 25, br: 25, color: Colors.amber),
       width: size.width * .3,
-      height: 70,
+      height: size.height* .07,
       child: FittedBox(//para ajustar el contenido segun el espacio que tenga en el widget 
         fit: BoxFit.contain,
         child: Padding(
@@ -92,18 +96,21 @@ class _BackgroundImage extends StatelessWidget {
       borderRadius: BorderRadius.circular(25),
       child: Container(
         width: double.infinity,
-        height: 400,
-        color: Colors.green,//solo esta de guia porque al poner la imagen se cubre
-        child: url == null
-        ?Image(
-          image: AssetImage('assets/no-image.png'))
+        height: double.infinity,
+        color: Colors.white,//solo esta de guia porque al poner la imagen se cubre
+        child: url == null //TODO: utilizo este condicional ternario en caso que no exista la foto
+        ? Image(
+          image: AssetImage('assets/no-image.png'), 
+          // fit: BoxFit.cover,
+          )
         :
-         FadeInImage(
-          placeholder: AssetImage('assets/jar-loading.gif'),
-          image: NetworkImage(url!),
-          fit: BoxFit
-              .cover, //para quye la imagen utilice todo el campo del widget
-        ),
+         FittedBox(//este me pone la imagen tal cual completa
+           child: FadeInImage(
+            placeholder: AssetImage('assets/jar-loading.gif'),
+            image: NetworkImage(url!),
+            fit: BoxFit.cover, //para quye la imagen utilice todo el campo del widget
+                 ),
+         ),
       ),
     );
   }
@@ -118,19 +125,23 @@ class _PriceTag extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
-    return Container(
-      decoration: _buildBoxDecoration(tr: 25, bl: 25, color: Colors.green),
-      width: size.width * .3,
-      height: 70,
-      child: FittedBox(//para ajustar el contenido segun el espacio que tenga en el widget 
-        fit: BoxFit.contain,
-        child: Padding(
-            padding: EdgeInsets.symmetric(horizontal: 20),
-            child: Text(
-          '$valor \$',
-          style: TextStyle(
-              fontSize: 20, color: Colors.white, fontWeight: FontWeight.bold),
-        )),
+    return FittedBox(
+      
+      child: Container(
+        
+        decoration: _buildBoxDecoration(tr: 25, bl: 25, color: Colors.green),
+        width: size.width * .3,
+        height: size.height* .07,
+        child: FittedBox(//para ajustar el contenido segun el espacio que tenga en el widget 
+          fit: BoxFit.contain,
+          child: Padding(
+              padding: EdgeInsets.symmetric(horizontal: 20),
+              child: Text(
+            '$valor \$',
+            style: TextStyle(
+                fontSize: 20, color: Colors.white, fontWeight: FontWeight.bold),
+          )),
+        ),
       ),
     );
   }
@@ -149,23 +160,32 @@ class _ProductDetail extends StatelessWidget {
     return Container(
       padding: EdgeInsets.symmetric(horizontal: 20, vertical: 5),
       alignment: FractionalOffset.bottomLeft,
-      width: size.width * 0.7,
-      height: 70,
+      width: size.width * .5,
+      height: size.height* .07,
       decoration: _buildBoxDecoration(bl: 25, tr: 20),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text(
-            title,
-            style: TextStyle(fontSize: 30, color: Colors.white),
-            maxLines: 1,
-            overflow: TextOverflow.ellipsis,
+          Expanded(
+            child: FittedBox(
+              child: Text(
+                title,
+                style: TextStyle(fontSize: 30, color: Colors.white),
+                maxLines: 1,
+                overflow: TextOverflow.ellipsis,
+              ),
+            ),
           ),
-          Text(
-            subtitle,
-            style: TextStyle(fontSize: 20, color: Colors.white),
-            maxLines: 1,
-            overflow: TextOverflow.ellipsis,
+          
+          Expanded(
+            child: FittedBox(
+              child: Text(
+                subtitle,
+                style: TextStyle(fontSize: 20, color: Colors.white),
+                maxLines: 1,
+                overflow: TextOverflow.ellipsis,
+              ),
+            ),
           )
         ],
       ),
