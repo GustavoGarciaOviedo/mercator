@@ -18,8 +18,8 @@ class ProductsService extends ChangeNotifier{
   //creo un anueva propiedad que me va a alojar un producto
   late Product selectedProduct;
 
-  bool isLoading=true;
-
+  bool isLoading = true;
+  bool isSaving = false;
   ProductsService(){
     this.loadProducts();
   }
@@ -30,10 +30,10 @@ class ProductsService extends ChangeNotifier{
     isLoading=true;
     notifyListeners();
     //toda esta es una cadena que me trae los datos en peticion
-    final url =  Uri.https(_baseUrl,'products.json');//endpoint y el path respectivamente
+    final url =  Uri.https(_baseUrl,'products.json');//endpoint y el path respectivamente esto vas despues de base url:'products.json'
     final resp =  await http.get(url);//http porque es el metodo de peticion get que voy a  utilizar
     final Map<String, dynamic> productsMap = json.decode(resp.body);
-     print(productsMap);
+     print('products service $productsMap');
 
 
 //e;l siguiente foreach para que  me convierta en una lista (array) el mapa(clave valor)
@@ -48,4 +48,41 @@ class ProductsService extends ChangeNotifier{
      return this.products;
      //print(products[0].name);
   }
+
+
+//paara crear o actualizar
+  Future saveOrCreateProduct(Product product)async{
+    isSaving = true;
+    notifyListeners();
+
+    if (product.id==null){
+      //es creacion
+    }
+    else{
+      // actualizar
+      await updateProduct(product);
+    }
+
+    isSaving = false;
+    notifyListeners();
+  }
+
+//para peticion al backend
+  Future<String> updateProduct (Product product) async {
+    final url =  Uri.https(_baseUrl,'products/${product.id}.json');//endpoint y el path respectivamente
+    final resp =  await http.put(url, body: product.toJson());//put para catualizar recordar lo que estoy hacioendo
+    final decoderData =  resp.body;
+
+    //print(decoderData);
+    //TODO: ACTUALIZAR EL LISAUDO DE PRODUCTOS
+
+    final index = products.indexWhere((element) => element.id==product.id);
+    products[index]=product;
+
+    return  product.id!;
+
+  }
+
+
+
 }

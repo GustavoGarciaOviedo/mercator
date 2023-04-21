@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
- //ESTA CLASE ES PARA UTILIZAR LA DECORACION DEL INPUT Y COMO SON VARIOS NECESITO RECICLARLA
+ //ESTA CLASE ES PARA UTILIZAR LA DECORACION DEL INPUT 
 class InputDecorations {
   
   static InputDecoration authInputDecoration({

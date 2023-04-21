@@ -18,14 +18,14 @@ class SideMenu extends StatelessWidget {
           ListTile(leading: Icon(Icons.home),title: Text('tu cuenta'),
             onTap: () { 
               Navigator.pushReplacementNamed(context, SettingsScreen.routeName);} ),//el llamado a la ruta es diferente porque lo especifique asi en la misma clase, y en el main
-          ListTile(leading: Icon(Icons.shopping_bag_outlined),title: Text('pedidos'),
-            onTap: (){Navigator.pushReplacementNamed(context, 'order');},  ),
           ListTile(leading: Icon(Icons.credit_score),title: Text('medio de pago'),
-            onTap: (){ Navigator.pushReplacementNamed(context, 'payment');}, ),
+            onTap: (){ 
+              Navigator.pushReplacementNamed(context, 'payment');}, ),
           ListTile(leading: Icon(Icons.person_pin_circle_outlined),title: Text('direccion'),
             onTap: (){
                Navigator.pushReplacementNamed(context, 'address');
             }, ),
+
           SizedBox(height: 265,),
           ListTile(leading: Icon(Icons.exit_to_app_outlined),title: Text('cerrar sesion'),
             onTap: (){

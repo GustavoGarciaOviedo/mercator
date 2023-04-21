@@ -10,7 +10,7 @@ class MyCardSwiper extends StatelessWidget {
   Widget build(BuildContext context) {
     final productsService = Provider.of<ProductsService>(context);
     return Container(
-      width: 400,
+      width: double.infinity,
       height: 300,
       child: Swiper(
         itemCount: productsService.products.length,
@@ -28,9 +28,9 @@ class MyCardSwiper extends StatelessWidget {
     
         //TODO: la imagen cuando se presiona el boton o se pasa automaticamente se pasan de ados fotografias o es el efectopor que segin el indice no pasa nada
         layout: SwiperLayout.STACK,
-        axisDirection: AxisDirection.left,
-        itemWidth: 300,
-        itemHeight: 400.0,
+        //axisDirection: AxisDirection.up,
+        itemWidth: 200,
+        itemHeight: 300.0,
         autoplay: false, // si esta en true se pasan las imagenes solas
         autoplayDisableOnInteraction: true,//en true se detiene la animacion mientras interactuo manualmente
         duration: 1000,//duracion de la animacion
@@ -38,7 +38,7 @@ class MyCardSwiper extends StatelessWidget {
          print('este es $index');
         },
         // pagination: SwiperPagination(),// muestra un punto señalando la cantidad de tarjetas que hay
-        control: SwiperControl(color: Colors.black),// son las flechas para mover las imagenes
+        //control: SwiperControl(color: Colors.black),// son las flechas para mover las imagenes
         
       ),
     );
